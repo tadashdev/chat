@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat em Tempo Real</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+
+      function enviarMensagem() {
+        const msg = document.getElementById('msg').value;
+        socket.emit('chat message', msg);  // Envia para o servidor
+        document.getElementById('msg').value = '';  // Limpa o campo
+      }
+
+      socket.on('chat message', function(msg){
+        const li = document.createElement('li');
+        li.textContent = msg;
+        document.getElementById('messages').appendChild(li);  // Exibe a mensagem
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Chat em Tempo Real</h1>
+    <ul id="messages"></ul>
+    <input id="msg" type="text" placeholder="Digite uma mensagem..." />
+    <button onclick="enviarMensagem()">Enviar</button>
+  </body>
+</html>
